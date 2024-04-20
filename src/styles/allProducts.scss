@@ -35,6 +35,25 @@
             .category-label {
                 font-size: 1.5rem;
             }
+            .category-items {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin-top: 24px;
+
+                .lead {
+                    font-size: 15px;
+                    text-transform: capitalize;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .counted-categories {
+                        font-size: 18px;
+                        letter-spacing: 1px;
+                    }
+                }
+            }
         }
     }
 

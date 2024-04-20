@@ -16,7 +16,7 @@ const Navbar = () => {
         fontSize: '14px',
     }
 
-    const isActive = location.pathname === '/home'
+    const isActive = location.pathname === '/home' || location.pathname === "/"
 
     return (
         <nav className={`navbar navbar-expand-lg px-2 ${isActive ? 'active' : 'unactive'}`}>
