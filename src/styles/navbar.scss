@@ -1,0 +1,22 @@
+.navbar {
+    z-index: 9;
+    height: 80px;
+    position: sticky;
+    top: 0;
+
+    &.active {
+        background-color: rgb(0 0 0 / 29%);
+    }
+
+    &.unactive {
+        background-color: #fff;
+    }
+    .active {
+        color: rgb(42, 149, 221) !important;
+    }
+    .nav-link {
+        &:hover {
+            color: rgba(42, 149, 221, 0.623) !important;
+        }
+    }
+}
