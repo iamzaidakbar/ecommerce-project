@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { API_URL } from './constants';
+import { SORT_API } from './constants';
 
 
 // Function to fetch products from the Fake Store API
-export const fetchProducts = async () => {
+export const fetchSortedProducts = async (query) => {
     try {
-        const response = await axios.get(`${API_URL}/products`);
-        
+        const response = await axios.get(`${SORT_API + query}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching products:', error);
