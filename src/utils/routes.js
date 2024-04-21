@@ -6,6 +6,8 @@ const Login = lazy(() => import("../components/Login"));
 const Home = lazy(() => import("../components/Home"));
 const Navbar = lazy(() => import("../components/Navbar"));
 const AllProducts = lazy(() => import("../components/allProducts"));
+const Product = lazy(() => import("../components/Product"));
+const Clothes = lazy(() => import("../components/Clothes"));
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +22,22 @@ export const router = createBrowserRouter([
         element: (<Suspense fallback={<BouncingDotsLoader />}>
             <Navbar />
             <AllProducts />
+        </Suspense>),
+
+    },
+    {
+        path: "/clothes",
+        element: (<Suspense fallback={<BouncingDotsLoader />}>
+            <Navbar />
+            <Clothes />
+        </Suspense>),
+
+    },
+    {
+        path: "/product/:id",
+        element: (<Suspense fallback={<BouncingDotsLoader />}>
+            <Navbar />
+            <Product />
         </Suspense>),
 
     },

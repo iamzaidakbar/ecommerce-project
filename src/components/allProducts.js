@@ -4,8 +4,6 @@ import ContentArea from './ContentArea'
 import "../styles/allProducts.scss"
 import { motion } from 'framer-motion'
 
-// eslint-disable-next-line
-
 const allProducts = () => {
 
   return (
@@ -14,8 +12,10 @@ const allProducts = () => {
       animate={{ scale: 1 }}
       transition={{ duration: 0.3 }}
       className='container all-products d-flex justify-content-center gap-5'>
+
       <WidgetArea />
       <ContentArea />
+
     </motion.div>
   )
 }

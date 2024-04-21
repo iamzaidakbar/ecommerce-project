@@ -31,7 +31,7 @@ const Navbar = () => {
                             <Link to={'/all-products'} className={`nav-link text-uppercase ${isActive ? 'text-white' : 'text-black'} ${location.pathname === '/all-products' && 'active'}`} >All Products</Link>
                         </li>
                         <li style={styles} className="nav-item">
-                            <Link to={'/'} className={`nav-link text-uppercase ${isActive ? 'text-white' : 'text-black'} ${location.pathname === '/clothes' && 'active'}`} >Clothes</Link>
+                            <Link to={'/clothes'} className={`nav-link text-uppercase ${isActive ? 'text-white' : 'text-black'} ${location.pathname === '/clothes' && 'active'}`} >Clothes</Link>
                         </li>
                         <li style={styles} className="nav-item">
                             <Link to={'/'} className={`nav-link text-uppercase ${isActive ? 'text-white' : 'text-black'} ${location.pathname === '/electronics' && 'active'}`} >Electronics</Link>

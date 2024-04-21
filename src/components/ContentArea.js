@@ -1,4 +1,5 @@
 // ContentArea.js
+import "../styles/content-area.scss"
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShimmerSimpleGallery } from 'react-shimmer-effects';
@@ -8,9 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProductsToStore } from '../redux/Slices/productsSlice';
 import { fetchProducts } from '../utils/getAllProducts';
 import { fetchSortedProducts } from '../utils/getSortedProductes';
+import { useNavigate } from 'react-router-dom';
 
 const ContentArea = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -111,6 +114,7 @@ const ContentArea = () => {
                         <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
+                            onClick={()=>{navigate('/product/' + item.id)}}
                             className="product-card" key={item.id}>
                             <HiShoppingBag className="cart-icon ms-auto" size={'20px'} color={'black'} />
                             <span className="product-img w-100 mt-3 mb-5">

@@ -1,4 +1,5 @@
 // WidgetArea.js
+import "../styles/widget-area.scss"
 import React, { useEffect, useState } from 'react';
 import MultiRangeSlider from './MultiRangeSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,8 @@ const WidgetArea = () => {
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(0);
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const allProducts = useSelector((store) => store.products.allProducts);
 
   const searchProduct = (e) => {
@@ -25,18 +28,27 @@ const WidgetArea = () => {
     try {
       const categoriesData = await fetchAllCategories();
       setCategories(categoriesData);
+      setIsLoading(false);
+
     } catch (error) {
+      setIsLoading(false);
+
       // Handle error
     }
   };
 
   const countCategories = () => {
-    const categoryCount = allProducts.reduce((acc, product) => {
-      acc[product.category] = (acc[product.category] || 0) + 1;
+    const categoryCount = allProducts?.reduce((acc, product) => {
+      if (product && product.category) {
+        acc[product.category] = (acc[product.category] || 0) + 1;
+      }
       return acc;
     }, {});
-    return categoryCount;
+  
+    return categoryCount || {}; // Return an empty object if categoryCount is undefined
   };
+  
+
 
   return (
     <div className="widget-area">
@@ -74,12 +86,13 @@ const WidgetArea = () => {
       <span className="categories mt-3">
         <span className="category-label">Categories</span>
         <div className="category-items">
-          {categories.map((category, index) => (
+          {!isLoading && categories.length > 0 && categories?.map((category, index) => (
             <div className="lead" key={index}>
               <span>{category}</span>
               <span className='counted-categories'>({countCategories()[category]})</span>
             </div>
           ))}
+
         </div>
       </span>
 
