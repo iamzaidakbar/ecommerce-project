@@ -5,7 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 const Login = lazy(() => import("../components/Login"));
 const Home = lazy(() => import("../components/Home"));
 const Navbar = lazy(() => import("../components/Navbar"));
-const AllProducts = lazy(() => import("../components/allProducts"));
+const AllProducts = lazy(() => import("../components/AllProducts"));
 const Product = lazy(() => import("../components/Product"));
 const Clothes = lazy(() => import("../components/Clothes"));
 
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
 
     },
     {
-        path: "/all-products",
+        path: "/store",
         element: (<Suspense fallback={<BouncingDotsLoader />}>
             <Navbar />
             <AllProducts />
