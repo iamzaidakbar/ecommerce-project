@@ -1,17 +1,16 @@
 import "../Showcase/Showcase.scss"
-import banner from "../../../src/assets/widget.webp"
 import { motion } from "framer-motion";
 import { BsSquare } from "react-icons/bs";
 import { PiSquaresFourThin } from "react-icons/pi";
 import { TbBorderNone } from "react-icons/tb"
 
 import React, { useState } from 'react'
-import MultiRangeSlider from "../MultiRangeSlider";
+import MultiRangeSlider from "../MutiRangeSlider/MultiRangeSlider";
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
-import ProductCard from "../ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 
 const Showcase = ({ products, isLoading, title, image }) => {
     const { pathname } = useLocation()
@@ -164,7 +163,7 @@ const Showcase = ({ products, isLoading, title, image }) => {
                                 sortedProducts.sort((a, b) => b.price - a.price);
                             }
                             return sortedProducts.map((item) => (
-                                <ProductCard item={item} layout={layout} />
+                                <ProductCard key={item.id} item={item} layout={layout} />
                             ));
                         })()
                     )}

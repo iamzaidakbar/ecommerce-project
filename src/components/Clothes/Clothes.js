@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import "../styles/widget-area.scss"
-import Showcase from './Showcase/Showcase'
+import Showcase from '../Showcase/Showcase'
 import { useDispatch, useSelector } from 'react-redux'
-import { addClothesToStore } from '../redux/Slices/clothingSlice'
-import { fetchProducts } from '../utils/getAllProducts'
-import image from "../../src/assets/women_in_yellow.jpg"
+import { addClothesToStore } from '../../redux/Slices/clothingSlice'
+import { fetchProducts } from '../../utils/getAllProducts'
+import image from "../../assets/women_in_yellow.jpg"
 
 
 const Clothes = () => {

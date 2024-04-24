@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaAmazon, FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
-import '../styles/login.scss';
+import '../Login/Login.scss';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 

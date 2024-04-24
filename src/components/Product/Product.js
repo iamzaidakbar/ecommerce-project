@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import '../styles/product.scss'
+import '../Product/Product.scss'
 import ReactImageZoom from 'react-image-zoom';
-import { getProduct } from '../utils/getProduct';
+import { getProduct } from '../../utils/getProduct';
 import { ShimmerSimpleGallery } from 'react-shimmer-effects';
 import { useParams } from 'react-router-dom';
 

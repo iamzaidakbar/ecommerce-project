@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import "../styles/allProducts.scss"
-import Showcase from './Showcase/Showcase'
+import "../AllProducts/AllProducts.scss"
+import Showcase from '../Showcase/Showcase'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts } from '../utils/getAllProducts'
-import { addProductsToStore } from '../redux/Slices/productsSlice'
-import image from "../../src/assets/black_and_white_women.avif"
+import { fetchProducts } from '../../utils/getAllProducts'
+import { addProductsToStore } from '../../redux/Slices/productsSlice'
+import image from "../../assets/black_and_white_women.avif"
 
 const AllProducts = () => {
   const dispatch = useDispatch();
