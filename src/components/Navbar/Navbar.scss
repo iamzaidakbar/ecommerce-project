@@ -1,19 +1,40 @@
 .navbar {
     z-index: 9;
     height: 50px;
-    position: sticky;
-    top: 0;
-    background-color: #fff;
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translate(-50%);
+    transition: all .2s ease;
 
-   
     .active {
-        color: rgb(5, 126, 207) !important;
+        border-bottom: 2px solid white !important;
     }
+
+    .nav-wrapper {
+        border-radius: 24px;
+        background-color: #000;
+        transition: all .2s ease;
+        height: 100%;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
     .nav-link {
         font-weight: 500;
         font-size: 11px;
+        color: #fff;
+        border-bottom: 2px solid rgb(0, 0, 0);
+
         &:hover {
-            color: rgb(42, 149, 221) !important;
+            border-bottom: 2px solid white;
         }
     }
+
+    .icon {
+        cursor: pointer;
+    }
+
 }

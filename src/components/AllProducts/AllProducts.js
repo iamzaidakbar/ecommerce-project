@@ -4,7 +4,6 @@ import Showcase from '../Showcase/Showcase'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from '../../utils/getAllProducts'
 import { addProductsToStore } from '../../redux/Slices/productsSlice'
-import image from "../../assets/black_and_white_women.avif"
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const AllProducts = () => {
 
   return (
     <div>
-      <Showcase title={'Store'} image={image} products={products} isLoading={isLoading} />
+      <Showcase title={'Store'} products={products} isLoading={isLoading} />
     </div>
   )
 }

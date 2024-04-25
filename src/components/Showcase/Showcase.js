@@ -59,7 +59,7 @@ const Showcase = ({ products, isLoading, title, image }) => {
     return (
         <div className="showcase d-flex flex-column">
             <span className="route text-center py-4">Home / {pathname.substring(1).charAt(0).toUpperCase() + pathname.substring(2)} / <strong className="text-danger h5">{selectedCategory}</strong></span>
-            <div className="banner mx-auto">
+            {image && <div className="banner mx-auto">
                 <img loading="lazy" src={image} alt="Banner" />
                 <span className="shop-buttons">
                     <motion.button onClick={() => {
@@ -72,7 +72,7 @@ const Showcase = ({ products, isLoading, title, image }) => {
                         setSelectedCategory("View All")
                     }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">View All</motion.button>}
                 </span>
-            </div>
+            </div>}
             <div className="showcase-content d-flex flex-column gap-3 py-4 mx-auto">
                 <span className="selected-category">{selectedCategory}</span>
                 <span className="showing-result">Showing 1-{filteredProducts?.length} of {filteredProducts?.length} results</span>

@@ -1,0 +1,46 @@
+.footer {
+    width: 100vw;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.068);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    padding: 64px 200px;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        label {
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            padding: 0;
+
+            li {
+                list-style-type: none;
+
+                a {
+                    text-decoration: none;
+                    font-size: 13px;
+                    color: #000;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+            }
+        }
+
+        p {
+            font-size: 13px;
+            color: #000;
+        }
+    }
+}

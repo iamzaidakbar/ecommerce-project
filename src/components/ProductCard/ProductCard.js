@@ -1,12 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiShoppingBag } from "react-icons/hi2";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
 
 const ProductCard = ({ item, layout }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isInWishlist, setIsInWishlist] = useState(false);
+
+    useEffect(() => {
+        const existingWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        setIsInWishlist(existingWishlist.some(wishlistItem => wishlistItem.id === item.id));
+    }, [item.id]);
+
+    const addItemToWishlist = (e, newItem) => {
+        e.stopPropagation();
+        const existingWishlistJSON = localStorage.getItem('wishlist') || '[]';
+        const existingWishlist = JSON.parse(existingWishlistJSON);
+
+        if (isInWishlist) {
+            const updatedWishlist = existingWishlist.filter(wishlistItem => wishlistItem.id !== newItem.id);
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+            setIsInWishlist(false); 
+        } else {
+            const updatedWishlist = [...existingWishlist, newItem];
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+            setIsInWishlist(true); 
+        }
+    }
 
     return (
         <motion.div
@@ -21,7 +44,7 @@ const ProductCard = ({ item, layout }) => {
             <span className="product-name mb-2">
                 <span className="name">{item.title}</span>
                 <span className="heart-icon">
-                    <FaHeart size={'20px'} color={'#0000006b'} />
+                    <FaHeart onClick={(e) => { addItemToWishlist(e, item) }} size={'20px'} color={isInWishlist ? 'red' : 'black'} style={{ cursor: 'pointer' }} />
                 </span>
             </span>
             <span className="product-category mb-2">{item.category}</span>
@@ -30,4 +53,4 @@ const ProductCard = ({ item, layout }) => {
     )
 }
 
-export default ProductCard
+export default ProductCard;
