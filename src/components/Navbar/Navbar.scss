@@ -31,10 +31,25 @@
         &:hover {
             border-bottom: 2px solid white;
         }
+
+
     }
 
     .icon {
         cursor: pointer;
+    }
+
+    a {
+        position: relative;
+
+        .badge {
+            position: absolute;
+            left: 12px;
+            top: -10px;
+            background-color: red;
+            border-radius: 50%;
+            font-size: 10px;
+        }
     }
 
 }

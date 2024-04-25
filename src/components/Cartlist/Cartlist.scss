@@ -1,0 +1,160 @@
+.cartlist {
+    width: 100% !important;
+
+    .cart-products {
+        width: 60%;
+
+        .cart-item {
+            img {
+                padding: 24px;
+                width: 15%;
+                object-fit: scale-down;
+                object-position: center;
+            }
+
+            .cart-product-details {
+                width: 70%;
+
+                p {
+                    margin: 0;
+                }
+
+                .product-title {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+
+                .product-price {
+                    font-size: 16px !important;
+                    font-weight: 600;
+                }
+
+                .product-category {
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .product-description {
+
+                    font-size: 10px !important;
+                }
+
+                .product {
+                    color: rgb(0, 0, 0);
+                    font-size: 11px;
+                }
+
+                #quantity {
+                    width: 90px;
+                    height: 48px;
+                    box-shadow: none;
+                    border: 1px solid rgba(0, 0, 0, 0.26);
+                    background-color: #fff;
+                    -webkit-appearance: none;
+                    text-align: center;
+
+                    &:focus {
+                        box-shadow: none;
+                        outline: none;
+                    }
+
+
+                }
+
+
+            }
+
+            .icon {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .cart-checkout {
+        width: 40%;
+
+        .checkout-wrapper {
+            .discounts {
+                p {
+                    font-size: 12px;
+                    color: grey;
+                }
+
+                span {
+                    font-weight: 400;
+                    font-size: 13px;
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+
+            .order-value {
+                p {
+                    font-size: 12px;
+                    color: grey;
+                }
+
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+            }
+
+            .delivery-charges {
+                border-bottom: 1px solid black;
+
+                p {
+                    font-size: 12px;
+                    color: grey;
+                }
+
+                span {
+                    font-size: 14px;
+                    font-weight: 400;
+                    text-transform: uppercase;
+                }
+            }
+
+            .total-price {
+                p {
+                    font-size: 15px;
+                    color: rgb(0, 0, 0);
+                    font-weight: 500;
+                }
+
+                span {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+
+            .btn {
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                font-size: 16px;
+                font-weight: 500;
+                height: 48px;
+
+                &:hover {
+                    background-color: rgb(41, 40, 40);
+                }
+            }
+
+            .lead {
+                font-size: 13px;
+                font-weight: 500;
+            }
+
+            .payment-gateway-img {
+                width: 100%;
+                object-fit: scale-down;
+                object-position: center;
+            }
+            .notice {
+                font-size: 10px;
+                color: gray;
+            }
+        }
+    }
+}

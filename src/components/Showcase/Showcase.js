@@ -8,7 +8,6 @@ import React, { useState } from 'react'
 import MultiRangeSlider from "../MutiRangeSlider/MultiRangeSlider";
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import { useLocation } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
 import ProductCard from "../ProductCard/ProductCard";
 
@@ -132,17 +131,14 @@ const Showcase = ({ products, isLoading, title, image }) => {
                             <BsSquare onClick={() => {
                                 setLayout('large')
                                 localStorage.setItem(pathname, 'large')
-                                toast.success("Layout Changed to Large Successfully.")
                             }} className="icon ms-2" color={layout === 'large' ? "red" : 'black'} size='18px' />
                             <PiSquaresFourThin onClick={() => {
                                 setLayout('medium')
                                 localStorage.setItem(pathname, 'medium')
-                                toast.success("Layout Changed to Medium Successfully.")
                             }} className="icon" color={layout === 'medium' ? "red" : 'black'} size='25px' />
                             <TbBorderNone onClick={() => {
                                 setLayout('small')
                                 localStorage.setItem(pathname, 'small')
-                                toast.success("Layout Changed to Small Successfully.")
                             }} className="icon" color={layout === 'small' ? "red" : 'black'} size='25px' />
                         </span>
 
@@ -169,7 +165,6 @@ const Showcase = ({ products, isLoading, title, image }) => {
                     )}
                 </span>
             </div>
-            <ToastContainer />
         </div >
     )
 }

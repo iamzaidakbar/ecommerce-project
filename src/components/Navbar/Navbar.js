@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { SlUser } from "react-icons/sl";
@@ -9,12 +9,31 @@ import "../Navbar/Navbar.scss";
 const Navbar = () => {
     const location = useLocation();
 
+    const [cartItemCount, setCartItemCount] = useState(0);
+    const [wishlistItemCount, setWishlistItemCount] = useState(0);
+
     const styles = {
         textDecoration: 'none',
         fontWeight: 'bold',
         fontSize: '14px',
     };
 
+
+
+    const fetchCounts = () => {
+        const cartItems = JSON.parse(localStorage.getItem('cartlist')) || [];
+        const wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
+        setCartItemCount(cartItems.length);
+        setWishlistItemCount(wishlistItems.length);
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            fetchCounts()
+        }, 3000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <nav className={`navbar navbar-expand-lg justify-content-center p-0`}>
@@ -45,10 +64,16 @@ const Navbar = () => {
                             <Link to={'/'} className={`nav-link text-uppercase text-white`} >Contact US</Link>
                         </li>
                         <li className="nav-item d-flex align-items-center">
-                            <Link to={'/wishlist'}> <FaHeart className='icon' color={'white'} size={"20px"} /></Link>
+                            <Link to={'/wishlist'}>
+                                <FaHeart className='icon' color={'white'} size={"20px"} />
+                                {wishlistItemCount > 0 && <span className="badge">{wishlistItemCount}</span>}
+                            </Link>
                         </li>
-                        <li className="nav-item d-flex align-items-center">
-                            <HiOutlineShoppingBag className='icon' color={'white'} size={"20px"} />
+                        <li className="nav-item d-flex align-items-center position-relative">
+                            <Link to={"/cart"}>
+                                <HiOutlineShoppingBag className='icon' color={'white'} size={"20px"} />
+                                {cartItemCount > 0 && <span className="badge">{cartItemCount}</span>}
+                            </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center">
                             <SlUser className='icon' color={'white'} size={"18px"} />

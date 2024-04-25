@@ -3,6 +3,7 @@ import { BouncingDotsLoader } from "../components//Loader/Loader";
 import { createBrowserRouter } from "react-router-dom";
 
 const Home = lazy(() => import("../components/Home/Home"));
+const Cart = lazy(() => import("../components/Cart/Cart"));
 const Footer = lazy(() => import("../components/Footer/Footer"));
 const App = lazy(() => import("../App"));
 const Login = lazy(() => import("../components/Login/Login"));
@@ -31,6 +32,14 @@ export const router = createBrowserRouter([
                 path: "/store",
                 element: (<Suspense fallback={<BouncingDotsLoader />}>
                     <AllProducts />
+                    <Footer />
+                </Suspense>),
+
+            },
+            {
+                path: "/cart",
+                element: (<Suspense fallback={<BouncingDotsLoader />}>
+                    <Cart />
                     <Footer />
                 </Suspense>),
 

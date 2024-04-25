@@ -1,0 +1,27 @@
+.no-results {
+    width: 20%;
+    margin: 44px auto;
+
+    .no-items_line_1 {
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+    .no-items_line_2 {
+        text-align: center;
+        font-size: 11px;
+        color: rgba(0, 0, 0, 0.692);
+    }
+
+    .btn {
+        background-color: #000;
+        color: #fff;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+        margin-top: 24px;
+    }
+}

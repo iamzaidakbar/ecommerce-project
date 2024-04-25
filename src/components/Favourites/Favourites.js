@@ -4,18 +4,22 @@ import Showcase from '../Showcase/Showcase';
 import NoResults from "../NoResults/NoResults";
 
 const Favourites = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [favourites, setFavourites] = useState([]);
-  const favouritesFromStorage = JSON.parse(localStorage.getItem("wishlist")) || [];
-
+  
   const title_1 = "SAVE YOUR FAVOURITE ITEMS"
   const title_2 = "Want to save the items that you love? Just click on the heart symbol beside the item and it will show up here. Browse now"
 
   useEffect(() => {
-    setIsLoading(true);
-    setFavourites(favouritesFromStorage);
-    setIsLoading(false);
-  }, [favouritesFromStorage]);
+    const intervalId = setInterval(() => {
+      setIsLoading(true);
+      const favouritesFromStorage = JSON.parse(localStorage.getItem("wishlist")) || [];
+      setFavourites(favouritesFromStorage);
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="favourites">
