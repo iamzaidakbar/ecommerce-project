@@ -24,7 +24,8 @@ const Cart = () => {
 
     return (
         <div className="cart">
-            <h2 className="title">Cart</h2>
+            <h2 className="title">Shopping Bag</h2>
+            <p className="lead text-center">Showing {cart?.length} Items</p>
 
             {cart && cart.length > 0 ? (
                 <Cartlist products={cart} isLoading={isLoading} />

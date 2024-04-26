@@ -1,4 +1,9 @@
 .cart {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 115px;
 
     .title {

@@ -1,23 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShimmerContentBlock, ShimmerPostItem } from "react-shimmer-effects";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import paymentGateway from "../../assets/payment-gateway.jpg"
 import "./Cartlist.scss";
+import CustomModal from '../Modal/Modal';
+import { useSelector } from 'react-redux';
 
 const Cartlist = ({ products, isLoading }) => {
-    const existingCartlist = JSON.parse(localStorage.getItem('cartlist')) || [];
+    const [updatedProducts, setUpdatedProducts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [showDiscountModal, setShowDiscountModal] = useState(false);
+    const discountApplied = useSelector(store => store?.discount?.discount_applied)
 
     const removeItemFromCart = (item) => {
-        const updatedCartlist = existingCartlist.filter(cartItem => cartItem.id !== item.id);
+        const updatedCartlist = updatedProducts.filter(cartItem => cartItem.id !== item.id);
         localStorage.setItem('cartlist', JSON.stringify(updatedCartlist));
+        setUpdatedProducts(updatedCartlist)
+    }
 
+    const updateQuantityOfProduct = (item, quantity) => {
+        const updatedProductsCopy = updatedProducts.map(product => {
+            if (product.id === item.id) {
+                return {
+                    ...product,
+                    quantity: quantity
+                };
+            }
+            return product;
+        });
+        setUpdatedProducts(updatedProductsCopy);
+        countTotalPrice();
+    }
+
+    const countTotalPrice = (discount = 0) => {
+        const totalPrice = updatedProducts.reduce((total, item) => {
+            return total + (item.price * item.quantity);
+        }, 0);
+        const discountedPrice = totalPrice * (1 - discount / 100);
+        setTotalPrice(parseFloat(discountedPrice.toFixed(2)));
+    }
+
+    useEffect(() => {
+        setUpdatedProducts(addItemCountToProducts(products));
+    }, []);
+
+    useEffect(() => {
+        countTotalPrice(discountApplied);
+    }, [updatedProducts, discountApplied])
+
+    const addItemCountToProducts = (products) => {
+        return products.map(product => ({
+            ...product,
+            quantity: 1
+        }));
     }
 
     return (
         <div className="container cartlist d-flex gap-5 p-5 mt-4">
             <section className="cart-products">
                 {
-                    isLoading || products.length === 0
+                    isLoading || updatedProducts.length === 0
                         ? <ShimmerContentBlock
                             title
                             text
@@ -25,15 +67,15 @@ const Cartlist = ({ products, isLoading }) => {
                             thumbnailWidth={140}
                             className="shimmer"
                         />
-                        : products.map((item, index) => (
-                            <div className={`cart-item d-flex align-items-start gap-4 mb-5 pb-5 ${index !== products.length - 1 && 'border-bottom'}`} key={item.id}>
+                        : updatedProducts.map((item, index) => (
+                            <div className={`cart-item d-flex align-items-start gap-4 mb-4 pb-4 ${index !== updatedProducts.length - 1 && 'border-bottom'}`} key={item.id}>
                                 <img src={item.image} alt={item.title} />
                                 <span className="cart-product-details">
                                     <p className='product-title'>{item.title}</p>
                                     <p className='product product-price'>${item.price}</p>
                                     <p className={`product product-rating py-2`}>Rating : {item.rating.rate}</p>
                                     <p className='product product-category mb-4'>{item.category}</p>
-                                    <select id='quantity' name='number'>
+                                    <select id='quantity' name='number' onChange={(e) => updateQuantityOfProduct(item, e.target.value)}>
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
@@ -54,7 +96,7 @@ const Cartlist = ({ products, isLoading }) => {
             </section>
             <section className="cart-checkout">
                 {
-                    isLoading || products.length === 0
+                    isLoading || updatedProducts.length === 0
                         ? <ShimmerPostItem
                             card
                             title
@@ -64,11 +106,13 @@ const Cartlist = ({ products, isLoading }) => {
                         : <div className='checkout-wrapper'>
                             <span className='discounts pb-3 mb-2 border-bottom d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Discounts</p>
-                                <span>Apply discount</span>
+                                {discountApplied
+                                    ? <span>{'Applied'}</span>
+                                    : <span onClick={() => { setShowDiscountModal(true) }}>{'Apply discount'}</span>}
                             </span>
                             <span className='order-value mb-1 d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Order value</p>
-                                <span className='m-0'>$ 9778</span>
+                                <span className='m-0'>${totalPrice}</span>
                             </span>
                             <span className='delivery-charges pb-3 mb-2 d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Delivery</p>
@@ -76,7 +120,7 @@ const Cartlist = ({ products, isLoading }) => {
                             </span>
                             <span className='total-price d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Total</p>
-                                <span className='m-0'>$ 97070</span>
+                                <span className='m-0'>${totalPrice}</span>
                             </span>
                             <button className='btn rounded-0 border-0 w-100 mt-5'>Continue to Checkout</button>
                             <p className='pt-3 m-0 lead'>We accept</p>
@@ -86,6 +130,10 @@ const Cartlist = ({ products, isLoading }) => {
                         </div>
                 }
             </section>
+            <CustomModal
+                isOpen={showDiscountModal}
+                onRequestClose={() => setShowDiscountModal(false)}
+            />
         </div>
     )
 }
