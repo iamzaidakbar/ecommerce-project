@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
 import '../Product/Product.scss'
-import ReactImageZoom from 'react-image-zoom';
+import React, { useEffect, useState } from 'react'
 import { getProduct } from '../../utils/getProduct';
 import { ShimmerSimpleGallery } from 'react-shimmer-effects';
 import { useParams } from 'react-router-dom';
@@ -10,8 +9,8 @@ const Product = () => {
     const params = useParams()
     const [product, setProduct] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
-    
-    const props = { width: 700, height: 600, zoomWidth: 700, zoomPosition: 'right', offset: { vertical: 0, horizontal: 0 }, img: product?.image };
+    const [zoomin, setZoomin] = useState(true);
+
 
     const fetchProduct = async () => {
         try {
@@ -30,10 +29,11 @@ const Product = () => {
 
 
     return (
-        <div className='product-container container'>
-            {isLoading ? <ShimmerSimpleGallery card imageHeight={200} caption /> : <div className='product d-flex gap-5'>
-                <div className='product-image'>
-                    <ReactImageZoom {...props} />
+        <div className='product-container '>
+            {isLoading ? <ShimmerSimpleGallery card imageHeight={200} caption /> : <div className='product'>
+                <div className='product-image p-2 rounded-4 bg-light'>
+                    <span className='img-1 shadow rounded-4'><img src={product.image} /></span>
+                    <span className='img-2 shadow rounded-4'> <img className={``} src={product.image} /></span>
                 </div>
                 <div className='product-details '>
                     <span className='product-route'>Home / Women / Bracelet</span>

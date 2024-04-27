@@ -5,8 +5,10 @@ import paymentGateway from "../../assets/payment-gateway.jpg"
 import "./Cartlist.scss";
 import CustomModal from '../Modal/Modal';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Cartlist = ({ products, isLoading }) => {
+    const navigate = useNavigate();
     const [updatedProducts, setUpdatedProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [showDiscountModal, setShowDiscountModal] = useState(false);
@@ -71,7 +73,7 @@ const Cartlist = ({ products, isLoading }) => {
                             <div className={`cart-item d-flex align-items-start gap-4 mb-4 pb-4 ${index !== updatedProducts.length - 1 && 'border-bottom'}`} key={item.id}>
                                 <img src={item.image} alt={item.title} />
                                 <span className="cart-product-details">
-                                    <p className='product-title'>{item.title}</p>
+                                    <p onClick={() => { navigate('/product/' + item.id) }} className='product-title'>{item.title}</p>
                                     <p className='product product-price'>${item.price}</p>
                                     <p className={`product product-rating py-2`}>Rating : {item.rating.rate}</p>
                                     <p className='product product-category mb-4'>{item.category}</p>

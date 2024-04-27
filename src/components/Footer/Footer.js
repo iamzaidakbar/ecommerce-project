@@ -5,7 +5,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className="footer border">
+        <div className="footer">
             <section className="shopping">
                 <label>SHOP</label>
                 <ul>

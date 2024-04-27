@@ -1,6 +1,11 @@
 .no-results {
     width: 20%;
-    margin: 44px auto;
+    height: 50vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
     .no-items_line_1 {
         font-size: 15px;

@@ -53,10 +53,11 @@ const Navbar = () => {
                             <Link to={'/clothes'} className={`nav-link text-uppercase text-white ${location.pathname === '/clothes' && 'active'}`} >Clothes</Link>
                         </li>
                         <li style={styles} className="nav-item">
-                            <Link to={'/'} className={`nav-link text-uppercase text-white ${location.pathname === '/electronics' && 'active'}`} >Electronics</Link>
+                            <Link to={'/electronics'} className={`nav-link text-uppercase text-white ${location.pathname === '/electronics' && 'active'}`} >Electronics</Link>
                         </li>
-                    </ul>
-                    <ul className="navbar-nav mb-2 mb-lg-0 d-flex gap-3">
+                        <li style={styles} className="nav-item">
+                            <Link to={'/jewelery'} className={`nav-link text-uppercase text-white ${location.pathname === '/jewelery' && 'active'}`} >Jewelery</Link>
+                        </li>
                         <li style={styles} className="nav-item">
                             <Link to={'/'} className={`nav-link text-uppercase text-white`} >About</Link>
                         </li>
@@ -79,6 +80,7 @@ const Navbar = () => {
                             <SlUser className='icon' color={'white'} size={"18px"} />
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
