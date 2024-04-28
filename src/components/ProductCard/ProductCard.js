@@ -4,9 +4,13 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { GiShoppingBag } from "react-icons/gi";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addErrorTypeToStore, addErrorMessageToStore } from '../../redux/Slices/errorSlice';
 
 const ProductCard = ({ item, layout }) => {
+    const isLoggedInUser = useSelector(store => store?.user?.user);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
 
@@ -17,6 +21,13 @@ const ProductCard = ({ item, layout }) => {
 
     const addItemToWishlist = (e, newItem) => {
         e.stopPropagation();
+
+        if (!isLoggedInUser) {
+            dispatch(addErrorTypeToStore('error'))
+            dispatch(addErrorMessageToStore('You have to login first.'))
+            return;
+        }
+
         const existingWishlistJSON = localStorage.getItem('wishlist') || '[]';
         const existingWishlist = JSON.parse(existingWishlistJSON);
 
@@ -39,6 +50,18 @@ const ProductCard = ({ item, layout }) => {
 
     const addItemToCart = (e, newItem) => {
         e.stopPropagation();
+
+        if (!isLoggedInUser) {
+            dispatch(addErrorTypeToStore('error'))
+            dispatch(addErrorMessageToStore('You have to login first.'))
+
+            setTimeout(() => {
+                dispatch(addErrorTypeToStore(''))
+                dispatch(addErrorMessageToStore(''))
+            }, 2000)
+            return;
+        }
+
         const existingCartlistJSON = localStorage.getItem('cartlist') || '[]';
         const existingCartlist = JSON.parse(existingCartlistJSON);
 
