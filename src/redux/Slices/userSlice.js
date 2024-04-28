@@ -10,9 +10,12 @@ const userSlice = createSlice({
         addUserToStore: (state, action) => {
             state.user = action.payload;
         },
+        removeUserFromStore: (state) => {
+            state.user = null
+        }
 
     },
 });
 
-export const { addUserToStore } = userSlice.actions;
+export const { addUserToStore, removeUserFromStore } = userSlice.actions;
 export default userSlice.reducer;

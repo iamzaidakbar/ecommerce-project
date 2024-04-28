@@ -1,56 +1,113 @@
 .navbar {
     z-index: 9;
-    height: 50px;
     position: fixed;
     top: 14px;
     left: 50%;
     transform: translate(-50%);
     transition: all .2s ease;
 
-    .active {
-        border-bottom: 2px solid white !important;
-    }
-
     .nav-wrapper {
         border-radius: 24px;
         background-color: #000;
         transition: all .2s ease;
-        height: 100%;
+        min-height: 40px;
 
         &:hover {
             transform: scale(1.2);
         }
-    }
 
-    .nav-link {
-        font-weight: 500;
-        font-size: 11px;
-        color: #fff;
-        border-bottom: 2px solid rgb(0, 0, 0);
-        white-space: nowrap;
 
-        &:hover {
-            border-bottom: 2px solid white;
+        .navbar-collapse {
+            flex-direction: column;
+        }
+
+        ul {
+            li {
+                a {
+                    position: relative;
+                    font-weight: 500;
+                    font-size: 11px;
+                    color: #fff;
+                    border-bottom: 2px solid rgb(0, 0, 0);
+                    white-space: nowrap;
+
+                    &:hover {
+                        border-bottom: 2px solid white;
+                    }
+
+                    .badge {
+                        position: absolute;
+                        left: 12px;
+                        top: -10px;
+                        background-color: red;
+                        border-radius: 50%;
+                        font-size: 10px;
+                    }
+                }
+
+                .username,
+                .signin-action {
+                    color: #fff;
+                    font-size: 11px;
+                    white-space: nowrap;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                }
+            }
         }
 
 
+
+
+    }
+}
+
+
+.icon {
+    cursor: pointer;
+}
+
+
+.active-user {
+    position: fixed;
+    z-index: 9;
+    top: 60px;
+    margin-left: -150px;
+    transition: all .2s ease;
+    background-color: #000;
+    border-radius: 99px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: center;
+
+    img {
+        width: auto;
+        object-fit: scale-down;
+        border-radius: 50%;
     }
 
-    .icon {
-        cursor: pointer;
-    }
+    .user-details {
 
-    a {
-        position: relative;
+        .username,
+        .email,
+        .btn {
+            color: #fff;
+            font-size: 11px;
+            white-space: nowrap;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
 
-        .badge {
-            position: absolute;
-            left: 12px;
-            top: -10px;
-            background-color: red;
-            border-radius: 50%;
-            font-size: 10px;
+        .btn {
+            border: 1px solid #fff;
+            margin-top: 12px;
+
+            &:hover {
+                background-color: #ffffff;
+                color: #000000;
+            }
         }
     }
-
 }
