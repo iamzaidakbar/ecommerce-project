@@ -5,12 +5,20 @@ import { SlUser } from "react-icons/sl";
 import { FaHeart } from "react-icons/fa";
 import { GrGoogleWallet } from "react-icons/gr";
 import "../Navbar/Navbar.scss";
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../../Firebase/Firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUserToStore } from "../../redux/Slices/userSlice"
 
 const Navbar = () => {
     const location = useLocation();
+    const dispatch = useDispatch()
 
     const [cartItemCount, setCartItemCount] = useState(0);
     const [wishlistItemCount, setWishlistItemCount] = useState(0);
+    const [refresh, setRefresh] = useState(false)
+
+    const activeUser = useSelector(store => store?.user?.user)
 
     const styles = {
         textDecoration: 'none',
@@ -18,7 +26,31 @@ const Navbar = () => {
         fontSize: '14px',
     };
 
+    const signInWithGoogle = async (e) => {
+        e.preventDefault();
+        const provider = new GoogleAuthProvider();
+        try {
+            const userCredential = await signInWithPopup(auth, provider);
+            const userData = userCredential.user;
+            console.log(userData);
 
+            localStorage.setItem('token', userData.accessToken)
+
+            const dataToDispatch = {
+                username: userData.displayName,
+                email: userData.email,
+                uid: userData.uid,
+                profile: userData.photoURL,
+                isLoggedIn: true,
+            }
+
+            dispatch(addUserToStore(dataToDispatch))
+            setRefresh(!refresh)
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const fetchCounts = () => {
         const cartItems = JSON.parse(localStorage.getItem('cartlist')) || [];
@@ -77,7 +109,7 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center">
-                            <SlUser className='icon' color={'white'} size={"18px"} />
+                            {activeUser ? <img className='rounded-circle' src={activeUser?.profile} height={'30px'} width={'30px'} /> : <SlUser onClick={signInWithGoogle} className='icon' color={'white'} size={"18px"} />}
                         </li>
                     </ul>
 

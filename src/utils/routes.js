@@ -2,16 +2,15 @@ import { Suspense, lazy } from "react";
 import { BouncingDotsLoader } from "../components//Loader/Loader";
 import { createBrowserRouter } from "react-router-dom";
 
-const Cart = lazy(() => import("../components/Cart/Cart"));
+const App = lazy(() => import("../App"));
+const AllProducts = lazy(() => import("../components/AllProducts/AllProducts"));
+const Clothes = lazy(() => import("../components/Clothes/Clothes"));
 const Electronics = lazy(() => import("../components/Electronics/Electronics"));
 const Jewelery = lazy(() => import("../components/Jewelery/Jewelery"));
-const Footer = lazy(() => import("../components/Footer/Footer"));
-const App = lazy(() => import("../App"));
-const Login = lazy(() => import("../components/Login/Login"));
-const AllProducts = lazy(() => import("../components/AllProducts/AllProducts"));
-const Product = lazy(() => import("../components/Product/Product"));
-const Clothes = lazy(() => import("../components/Clothes/Clothes"));
+const Cart = lazy(() => import("../components/Cart/Cart"));
 const Wishlist = lazy(() => import("../components/Favourites/Favourites"));
+const Product = lazy(() => import("../components/Product/Product"));
+const Footer = lazy(() => import("../components/Footer/Footer"));
 
 export const router = createBrowserRouter([
 
@@ -78,13 +77,6 @@ export const router = createBrowserRouter([
 
             },
         ]
-
-    },
-    {
-        path: "/login",
-        element: (<Suspense fallback={<BouncingDotsLoader />}>
-            <Login />
-        </Suspense>),
 
     },
 ]);

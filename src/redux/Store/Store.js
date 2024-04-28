@@ -4,6 +4,7 @@ import clothingSlice from "../Slices/clothingSlice";
 import discountSlice from "../Slices/discountSlice";
 import electronicsSlice from "../Slices/electronicsSlice";
 import jewelerySlice from "../Slices/jewelerySlice";
+import userSlice from "../Slices/userSlice";
 
 const Store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const Store = configureStore({
     discount: discountSlice,
     electronics: electronicsSlice,
     jewelery: jewelerySlice,
+    user: userSlice,
   },
 });
 
