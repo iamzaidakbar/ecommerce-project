@@ -99,7 +99,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg">
+            <nav onMouseLeave={() => { setNavActive(false) }} className="navbar navbar-expand-lg">
                 <div className="nav-wrapper container-fluid p-2">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -144,11 +144,9 @@ const Navbar = () => {
                                 {activeUser ? <span style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-3'><img onMouseOver={() => { setNavActive(true) }} className='rounded-circle' src={activeUser?.profile} height={'30px'} width={'30px'} /> <p className='m-0 username'>{activeUser?.username}</p></span> : <span onClick={signInWithGoogle} style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-2'><SlUser className='icon' color={'white'} size={"18px"} /> <p className='m-0 signin-action'>Sign In</p></span>}
                                 {navActive && <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
+                                    animate={{ opacity: 1, scale: 1, }}
                                     exit={{ opacity: 0 }}
-                                    onMouseLeave={() => {
-                                        setNavActive(false)
-                                    }}
+                                    style={{ transform: 'translate(0, 90px)' }}
                                     className='active-user'>
                                     <img src={activeUser?.profile} />
                                     <div className='user-details'>

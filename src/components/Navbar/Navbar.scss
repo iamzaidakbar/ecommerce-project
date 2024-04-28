@@ -11,6 +11,7 @@
         background-color: #000;
         transition: all .2s ease;
         min-height: 40px;
+        max-height: 50px;
 
         &:hover {
             transform: scale(1.2);
@@ -69,10 +70,8 @@
 
 
 .active-user {
-    position: fixed;
     z-index: 9;
-    top: 60px;
-    margin-left: -150px;
+    margin-left: -300px;
     transition: all .2s ease;
     background-color: #000;
     border-radius: 99px;
@@ -81,6 +80,7 @@
     align-items: center;
     gap: 24px;
     justify-content: center;
+    transform: translate(8px, 90px) !important;
 
     img {
         width: auto;
