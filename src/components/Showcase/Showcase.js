@@ -1,103 +1,93 @@
-import "../Showcase/Showcase.scss"
+import "../Showcase/Showcase.scss";
 import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
 import { BsSquare } from "react-icons/bs";
 import { PiSquaresFourThin } from "react-icons/pi";
-import { TbBorderNone } from "react-icons/tb"
-
-import React, { useState } from 'react'
+import { TbBorderNone } from "react-icons/tb";
 import MultiRangeSlider from "../MutiRangeSlider/MultiRangeSlider";
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import { useLocation } from "react-router-dom";
-import { useEffect } from 'react';
 import ProductCard from "../ProductCard/ProductCard";
+import useAlert from "../../utils/useAlert";
 
 const Showcase = ({ products, isLoading, title, image }) => {
-    const { pathname } = useLocation()
+    const { handleAlertClose, handleAlertOpen } = useAlert();
+    const { pathname } = useLocation();
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(300);
-    const [layout, setLayout] = useState('large')
+    const [layout, setLayout] = useState('large');
     const [sortOption, setSortOption] = useState('Default');
     const [selectedCategory, setSelectedCategory] = useState(title);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
-        let filtered = products;
+        let filtered = products?.filter(item => {
+            if (selectedCategory === "Men's Wear") {
+                return item.category === "men's clothing";
+            } else if (selectedCategory === "Women's Wear") {
+                return item.category === "women's clothing";
+            } else {
+                return true;
+            }
+        });
 
-        // Apply search filter if searchQuery is not empty
         if (searchQuery) {
             filtered = filtered?.filter(item =>
                 item.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
 
-        // Apply price range filter
         filtered = filtered?.filter(item => item.price >= minVal && item.price <= maxVal);
-
-        // Apply filter for category
-        filtered = filtered?.filter(item => {
-            if (selectedCategory === "Men's Wear") {
-                return item.category === "men's clothing";
-            } else if (selectedCategory === "Women's Wear") {
-                return item.category === "women's clothing";
-            } else {
-                return true; // Show all products for "View All"
-            }
-        });
-
 
         setFilteredProducts(filtered);
     }, [products, searchQuery, minVal, maxVal, selectedCategory]);
 
     useEffect(() => {
-        if (localStorage.getItem(pathname)) {
-            setLayout(localStorage.getItem(pathname))
+        const storedLayout = localStorage.getItem(pathname);
+        if (storedLayout) {
+            setLayout(storedLayout);
         }
-    }, [])
+    }, []);
+
+    const handleLayoutChange = (newLayout) => {
+        setLayout(newLayout);
+        localStorage.setItem(pathname, newLayout);
+        handleAlertOpen('success', 'Layout changed to ' + newLayout, '#1fae15');
+
+        setTimeout(() => {
+            handleAlertClose();
+        }, 5000)
+    };
 
     return (
         <div className="showcase d-flex flex-column">
             <span className="route text-center py-4">Home / {pathname.substring(1).charAt(0).toUpperCase() + pathname.substring(2)} / <strong className="text-danger h5">{selectedCategory}</strong></span>
-            {image && <div className="banner mx-auto">
-                <img loading="lazy" src={image} alt="Banner" />
-                <span className="shop-buttons">
-                    <motion.button onClick={() => {
-                        setSelectedCategory("Women's Wear")
-                    }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">For Her</motion.button>
-                    <motion.button onClick={() => {
-                        setSelectedCategory("Men's Wear")
-                    }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">For Him</motion.button>
-                    {selectedCategory != 'View All' && <motion.button onClick={() => {
-                        setSelectedCategory("View All")
-                    }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">View All</motion.button>}
-                </span>
-            </div>}
+            {image && (
+                <div className="banner mx-auto">
+                    <img loading="lazy" src={image} alt="Banner" />
+                    <span className="shop-buttons">
+                        <motion.button onClick={() => setSelectedCategory("Women's Wear")} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">For Her</motion.button>
+                        <motion.button onClick={() => setSelectedCategory("Men's Wear")} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">For Him</motion.button>
+                        {selectedCategory !== 'View All' && <motion.button onClick={() => setSelectedCategory("View All")} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.85 }} className="btn btn-outline-dark btn-sm rounded-0 px-4">View All</motion.button>}
+                    </span>
+                </div>
+            )}
             <div className="showcase-content d-flex flex-column gap-3 py-4 mx-auto">
                 <span className="selected-category">{selectedCategory}</span>
                 <span className="showing-result">Showing 1-{filteredProducts?.length} of {filteredProducts?.length} results</span>
                 <div className="filters d-flex align-items-center justify-content-between">
-
-
-                    {/* Search Filter */}
-
-
                     <section>
                         <input
                             type="search"
                             className="form-control form-control-sm rounded-0"
                             placeholder="Search Products..."
-                            onChange={(e) => { setSearchQuery(e.target.value) }}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </section>
-
-
                     <section className="d-flex align-items-center gap-4">
-
-
-                        {/* Price Filter */}
-
                         <span className="price-filter d-flex align-items-center gap-2">
-                            <span className="price-val">${minVal < 10 && 0}{minVal}</span>
+                            <span className="price-val">${minVal < 10 ? `0${minVal}` : minVal}</span>
                             <MultiRangeSlider
                                 min={0}
                                 max={300}
@@ -108,45 +98,20 @@ const Showcase = ({ products, isLoading, title, image }) => {
                             />
                             <span className="price-val">${maxVal}</span>
                         </span>
-
-                        {/* Total Result */}
-
-
                         <span className="total-result">{filteredProducts?.length} ITEMS</span>
-
-                        {/* Sort Filter */}
-
-
                         <select id="selectbox" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                             <option value="Sort By">Sort By</option>
                             <option value="Default">Deafult</option>
                             <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
-
-                        {/* Layout Filter*/}
-
-
                         <span className="layout-filter d-flex align-items-center gap-3">
-                            <BsSquare onClick={() => {
-                                setLayout('large')
-                                localStorage.setItem(pathname, 'large')
-                            }} className="icon ms-2" color={layout === 'large' ? "red" : 'black'} size='18px' />
-                            <PiSquaresFourThin onClick={() => {
-                                setLayout('medium')
-                                localStorage.setItem(pathname, 'medium')
-                            }} className="icon" color={layout === 'medium' ? "red" : 'black'} size='25px' />
-                            <TbBorderNone onClick={() => {
-                                setLayout('small')
-                                localStorage.setItem(pathname, 'small')
-                            }} className="icon" color={layout === 'small' ? "red" : 'black'} size='25px' />
+                            <BsSquare onClick={() => handleLayoutChange('large')} className="icon ms-2" color={layout === 'large' ? "red" : 'black'} size='18px' />
+                            <PiSquaresFourThin onClick={() => handleLayoutChange('medium')} className="icon" color={layout === 'medium' ? "red" : 'black'} size='25px' />
+                            <TbBorderNone onClick={() => handleLayoutChange('small')} className="icon" color={layout === 'small' ? "red" : 'black'} size='25px' />
                         </span>
-
                     </section>
-
                 </div>
-
-
                 <span className="products mt-5">
                     {(isLoading || filteredProducts?.length === 0) ? (
                         <ShimmerSimpleGallery card imageHeight={200} caption />
@@ -165,8 +130,8 @@ const Showcase = ({ products, isLoading, title, image }) => {
                     )}
                 </span>
             </div>
-        </div >
-    )
+        </div>
+    );
 }
 
-export default Showcase
+export default Showcase;

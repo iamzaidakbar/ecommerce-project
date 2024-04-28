@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { SlUser } from "react-icons/sl";
-import { FaHeart } from "react-icons/fa";
+import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { GrGoogleWallet } from "react-icons/gr";
 import "../Navbar/Navbar.scss";
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
@@ -13,18 +13,23 @@ import { motion } from 'framer-motion';
 import { MdError } from "react-icons/md";
 import { IoIosWarning } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { addErrorMessageToStore, addErrorTypeToStore } from '../../redux/Slices/errorSlice';
+import useAlert from '../../utils/useAlert';
+import useGoogle from '../../utils/useGoogle';
+import useLogout from '../../utils/useLogout';
 
 const Navbar = () => {
     const location = useLocation();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const { handleAlertClose, handleAlertOpen } = useAlert();
+    const { signInWithGoogle } = useGoogle()
+    const { logoutUser } = useLogout()
 
     const [cartItemCount, setCartItemCount] = useState(0);
     const [wishlistItemCount, setWishlistItemCount] = useState(0);
     const [navActive, setNavActive] = useState(false)
 
     const activeUser = useSelector(store => store?.user?.user)
-    const error = useSelector(store => store?.error)
+    const alert = useSelector(store => store?.alert)
 
 
     const styles = {
@@ -33,48 +38,6 @@ const Navbar = () => {
         fontSize: '14px',
     };
 
-    const dispatchUserToStore = (dataToDispatch, flag) => {
-        if (flag) {
-            dispatch(addUserToStore(dataToDispatch))
-        } else {
-            dispatch(removeUserFromStore())
-        }
-    }
-
-    const signInWithGoogle = async (e) => {
-        e.preventDefault();
-        const provider = new GoogleAuthProvider();
-        try {
-            const userCredential = await signInWithPopup(auth, provider);
-            const userData = userCredential.user;
-
-            localStorage.setItem('token', userData.accessToken)
-
-            const dataToDispatch = {
-                username: userData.displayName,
-                email: userData.email,
-                uid: userData.uid,
-                profile: userData.photoURL,
-                isLoggedIn: true,
-            }
-
-            dispatchUserToStore(dataToDispatch, true)
-
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const logouUser = async () => {
-        try {
-            await signOut(auth)
-            localStorage.removeItem('token')
-            dispatchUserToStore(null, false)
-
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     const fetchCounts = () => {
         const cartItems = JSON.parse(localStorage.getItem('cartlist')) || [];
@@ -86,7 +49,7 @@ const Navbar = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             fetchCounts()
-        }, 3000);
+        }, 1000);
 
         return () => clearInterval(intervalId);
     }, []);
@@ -100,7 +63,7 @@ const Navbar = () => {
                 profile: auth?.currentUser.photoURL,
                 isLoggedIn: true,
             }
-            dispatchUserToStore(dataToDispatch, true)
+            dispatch(addUserToStore(dataToDispatch))
         }
     }, [auth?.currentUser])
 
@@ -147,7 +110,7 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center">
-                            {activeUser ? <span style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-3'><img onMouseOver={() => { setNavActive(true) }} className='rounded-circle' src={activeUser?.profile} height={'30px'} width={'30px'} /> <p className='m-0 username'>{activeUser?.username}</p></span> : <span onClick={signInWithGoogle} style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-2'><SlUser className='icon' color={'white'} size={"18px"} /> <p className='m-0 signin-action'>Sign In</p></span>}
+                            {activeUser ? <span style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-3'><img onMouseOver={() => { setNavActive(true) }} className='rounded-circle' src={activeUser?.profile} height={'30px'} width={'30px'} /></span> : <span onClick={signInWithGoogle} style={{ cursor: 'pointer' }} className='d-flex align-items-center gap-2'><SlUser className='icon' color={'white'} size={"18px"} /> <p className='m-0 signin-action'>Sign In</p></span>}
                             {navActive && <motion.div
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1, }}
@@ -158,7 +121,7 @@ const Navbar = () => {
                                 <div className='user-details'>
                                     <p className='m-0 username'>{activeUser?.username}</p>
                                     <p className='m-0 email'>{activeUser?.email}</p>
-                                    <button onClick={logouUser} className='btn btn-sm rounded-0'>Sign Out</button>
+                                    <button onClick={logoutUser} className='btn btn-sm rounded-0'>Sign Out</button>
                                 </div>
                             </motion.div>
                             }
@@ -169,21 +132,22 @@ const Navbar = () => {
 
 
             <motion.div
-                transition={{ ease: "easeOut", duration: .1 }}
-                animate={{ x: error?.errorMessage?.length > 0 ? 710 : 0 }}
-                className='alert d-flex align-items-center gap-2'>
+                transition={{ ease: "easeOut", duration: 0.1 }}
+                animate={{ x: alert?.alertMessage?.length > 0 ? 710 : 0 }}
+                className="alert d-flex align-items-center gap-2"
+                style={{ backgroundColor: alert?.color || 'black', animation: alert?.alertMessage?.length > 0 && 'glowing .5s infinite alternate', '--box-shadow-color': alert?.color || 'black' }}>
 
-
-                {error?.errorType === 'error' ? <MdError color='red' size={'24px'} /> : error.errorType === 'warning' ? <IoIosWarning color='yellow' size="24px" /> : ""}
-                <p style={{ color: error?.errorType === 'error' ? 'red' : error?.errorType === 'warning' ? 'yellow' : 'inherit' }} className='m-0 error-message'>{error?.errorMessage}</p>
-
-                <RxCross2 onClick={() => {
-                    dispatch(addErrorTypeToStore(''))
-                    dispatch(addErrorMessageToStore(''))
-                }} className='ms-3' size="20px" color={error?.errorType === 'error' ? 'red' : 'yellow'} />
-
-
+                {alert && (
+                    <>
+                        {alert.alertType === 'error' && <MdError color='white' size={'24px'} />}
+                        {alert.alertType === 'warning' && <IoIosWarning color='yellow' size="24px" />}
+                        {alert.alertType === 'success' && <FaCheckCircle color='white' size="24px" />}
+                        <p className='m-0 error-message'>{alert.alertMessage}</p>
+                        <RxCross2 onClick={handleAlertClose} className='ms-3' size="20px" color={'white'} />
+                    </>
+                )}
             </motion.div>
+
 
         </nav >
     );
