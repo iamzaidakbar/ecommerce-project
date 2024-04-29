@@ -1,0 +1,40 @@
+.checkout {
+    width: 100%;
+    min-height: 60vh;
+    max-width: auto;
+
+    .checkout_steps {
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
+        span {
+            color: grey;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        &._checkout_cart {
+            .bag {
+                color: #31c214;
+                border-bottom: 2px solid #31c214;
+            }
+        }
+
+        &._checkout_address {
+            .address {
+                color: #31c214;
+                border-bottom: 2px solid #31c214;
+            }
+        }
+
+        &._checkout_payment {
+            .payment {
+                color: #31c214;
+                border-bottom: 2px solid #31c214;
+            }
+        }
+    }
+}

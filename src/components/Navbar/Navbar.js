@@ -104,7 +104,7 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center me-2">
-                            <Link className='border-0' to={"/cart"}>
+                            <Link className='border-0' to={"/checkout/cart"}>
                                 <HiOutlineShoppingBag className='icon' color={'white'} size={"20px"} />
                                 {cartItemCount > 0 && localStorage.getItem('token') && <span className="badge">{cartItemCount}</span>}
                             </Link>

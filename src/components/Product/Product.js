@@ -57,7 +57,7 @@ const Product = () => {
 
                                 {!isInCart
                                     ? <button onClick={(e) => { addItemToCart(e, product) }} className='w-100 btn btn-outline-dark rounded-0'> <HiOutlineShoppingBag color='black' size='16px' className='me-2 icon' /> ADD TO BAG</button>
-                                    : <button onClick={(e) => { navigate("/cart") }} className='w-100 btn btn-outline-dark rounded-0'> <HiOutlineShoppingBag color='black' size='16px' className='me-2 icon' /> GO TO BAG</button>
+                                    : <button onClick={(e) => { navigate("/checkout/cart") }} className='w-100 btn btn-outline-dark rounded-0'> <HiOutlineShoppingBag color='black' size='16px' className='me-2 icon' /> GO TO BAG</button>
                                 }
                             </>
                             : <span>

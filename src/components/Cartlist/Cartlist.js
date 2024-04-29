@@ -6,6 +6,7 @@ import "./Cartlist.scss";
 import CustomModal from '../Modal/Modal';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { DISCOUNT_OFFER } from '../../utils/constants';
 
 const Cartlist = ({ products, isLoading }) => {
     const navigate = useNavigate();
@@ -34,12 +35,11 @@ const Cartlist = ({ products, isLoading }) => {
         countTotalPrice();
     }
 
-    const countTotalPrice = (discount = 0) => {
+    const countTotalPrice = () => {
         const totalPrice = updatedProducts.reduce((total, item) => {
             return total + (item.price * item.quantity);
         }, 0);
-        const discountedPrice = totalPrice * (1 - discount / 100);
-        setTotalPrice(parseFloat(discountedPrice.toFixed(2)));
+        setTotalPrice(totalPrice.toFixed(2));
     }
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const Cartlist = ({ products, isLoading }) => {
     }, []);
 
     useEffect(() => {
-        countTotalPrice(discountApplied);
+        countTotalPrice();
     }, [updatedProducts, discountApplied])
 
     const addItemCountToProducts = (products) => {
@@ -59,7 +59,7 @@ const Cartlist = ({ products, isLoading }) => {
 
     return (
         <div className="container cartlist d-flex gap-5 p-5 mt-4">
-            <section className="cart-products">
+            <section className="cart-products border ">
                 {
                     isLoading || updatedProducts.length === 0
                         ? <ShimmerContentBlock
@@ -70,7 +70,7 @@ const Cartlist = ({ products, isLoading }) => {
                             className="shimmer"
                         />
                         : updatedProducts.map((item, index) => (
-                            <div className={`cart-item d-flex align-items-start gap-4 mb-4 pb-4 ${index !== updatedProducts.length - 1 && 'border-bottom'}`} key={item.id}>
+                            <div className={`cart-item d-flex align-items-start gap-2 mb-2 ${index != products?.length - 1 && 'border-bottom'}`} key={item.id}>
                                 <img src={item.image} alt={item.title} />
                                 <span className="cart-product-details">
                                     <p onClick={() => { navigate('/product/' + item.id) }} className='product-title'>{item.title}</p>
@@ -105,7 +105,7 @@ const Cartlist = ({ products, isLoading }) => {
                             cta
                             imageWidth={80}
                             imageHeight={80} />
-                        : <div className='checkout-wrapper'>
+                        : <div className='checkout-wrapper border p-3 '>
                             <span className='discounts pb-3 mb-2 border-bottom d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Discounts</p>
                                 {discountApplied
@@ -116,15 +116,20 @@ const Cartlist = ({ products, isLoading }) => {
                                 <p className='m-0'>Order value</p>
                                 <span className='m-0'>${totalPrice}</span>
                             </span>
+                            <span className='delivery-charges border-0 pb-3 mb-2 d-flex align-items-center justify-content-between'>
+                                <p className='m-0'>Offer</p>
+                                <span className='m-0'>{discountApplied ? '- $'+ DISCOUNT_OFFER : '$0'}</span>
+                            </span>
                             <span className='delivery-charges pb-3 mb-2 d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Delivery</p>
                                 <span className='m-0'>Free</span>
                             </span>
+
                             <span className='total-price d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Total</p>
-                                <span className='m-0'>${totalPrice}</span>
+                                <span className='m-0'>${totalPrice - (discountApplied ? DISCOUNT_OFFER : 0)}</span>
                             </span>
-                            <button className='btn rounded-0 border-0 w-100 mt-5'>Continue to Checkout</button>
+                            <button onClick={()=>{navigate("/checkout/address")}} className='btn rounded-0 border-0 w-100 mt-5'>Continue to Checkout</button>
                             <p className='pt-3 m-0 lead'>We accept</p>
                             <p className='pt-1 m-0 lead'>Cash on Delivery</p>
                             <img loading='lazy' src={paymentGateway} className='payment-gateway-img pt-2' />

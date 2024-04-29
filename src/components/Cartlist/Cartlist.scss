@@ -6,9 +6,12 @@
         width: 60%;
 
         .cart-item {
+            padding: 24px;
+            cursor: pointer;
+            
             img {
-                padding: 24px;
-                width: 15%;
+                padding: 12px;
+                width: 20%;
                 object-fit: scale-down;
                 object-position: center;
             }

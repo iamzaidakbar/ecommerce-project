@@ -30,9 +30,6 @@ const Cart = () => {
 
     return (
         <div className="cart">
-            <h2 className="title">Shopping Bag</h2>
-            <p className="lead">Showing {localStorage.getItem('token') ? cart?.length : 0} Items</p>
-
             {
                 localStorage.getItem('token')
                     ? cart && cart.length > 0 ? (
