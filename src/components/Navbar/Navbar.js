@@ -5,10 +5,9 @@ import { SlUser } from "react-icons/sl";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { GrGoogleWallet } from "react-icons/gr";
 import "../Navbar/Navbar.scss";
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '../../Firebase/Firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserToStore, removeUserFromStore } from "../../redux/Slices/userSlice"
+import { addUserToStore} from "../../redux/Slices/userSlice"
 import { motion } from 'framer-motion';
 import { MdError } from "react-icons/md";
 import { IoIosWarning } from "react-icons/io";
@@ -20,7 +19,7 @@ import useLogout from '../../utils/useLogout';
 const Navbar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const { handleAlertClose, handleAlertOpen } = useAlert();
+    const { handleAlertClose } = useAlert();
     const { signInWithGoogle } = useGoogle()
     const { logoutUser } = useLogout()
 
@@ -77,7 +76,7 @@ const Navbar = () => {
                 }} className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav d-flex align-items-center gap-2">
                         <li style={styles} className="nav-item">
-                            <Link className='border-0' to={'/home'} ><GrGoogleWallet className='icon' size={'30px'} color={location.pathname === '/home' || location.pathname === '/' ? 'red' : 'white'} /></Link>
+                            <Link className='border-0' to={'/store'} ><GrGoogleWallet className='icon' size={'30px'} color={location.pathname === '/home' || location.pathname === '/' ? 'red' : 'white'} /></Link>
                         </li>
                         <li style={styles} className="nav-item">
                             <Link to={'/store'} className={`nav-link text-uppercase text-white ${location.pathname === '/store' && 'active'}`} >All Products</Link>
@@ -92,21 +91,21 @@ const Navbar = () => {
                             <Link to={'/jewelery'} className={`nav-link text-uppercase text-white ${location.pathname === '/jewelery' && 'active'}`} >Jewelery</Link>
                         </li>
                         <li style={styles} className="nav-item">
-                            <Link to={'/'} className={`nav-link text-uppercase text-white`} >About</Link>
+                            <Link to={'/about'} className={`nav-link text-uppercase text-white`} >About</Link>
                         </li>
                         <li style={styles} className="nav-item">
-                            <Link to={'/'} className={`nav-link text-uppercase text-white`} >Contact US</Link>
+                            <Link to={'/contact'} className={`nav-link text-uppercase text-white`} >Contact US</Link>
                         </li>
                         <li className="nav-item d-flex align-items-center me-2">
                             <Link className='border-0' to={'/wishlist'}>
                                 <FaHeart className='icon' color={'white'} size={"20px"} />
-                                {wishlistItemCount > 0 && <span className="badge">{wishlistItemCount}</span>}
+                                {wishlistItemCount > 0 && localStorage.getItem('token') && <span className="badge">{wishlistItemCount}</span>}
                             </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center me-2">
                             <Link className='border-0' to={"/cart"}>
                                 <HiOutlineShoppingBag className='icon' color={'white'} size={"20px"} />
-                                {cartItemCount > 0 && <span className="badge">{cartItemCount}</span>}
+                                {cartItemCount > 0 && localStorage.getItem('token') && <span className="badge">{cartItemCount}</span>}
                             </Link>
                         </li>
                         <li className="nav-item d-flex align-items-center">

@@ -3,8 +3,9 @@
     position: fixed;
     top: 14px;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-60%);
     transition: all .2s ease;
+    scale: 0.8;
 
     .nav-wrapper {
         border-radius: 24px;
@@ -34,6 +35,10 @@
                     white-space: nowrap;
 
                     &:hover {
+                        border-bottom: 2px solid white;
+                    }
+
+                    &.active {
                         border-bottom: 2px solid white;
                     }
 
@@ -86,7 +91,7 @@
         0% {
             box-shadow: 0 0 3px 0px var(--box-shadow-color);
         }
-    
+
         100% {
             box-shadow: 0 0 5px 3px var(--box-shadow-color);
         }

@@ -11,7 +11,7 @@ const useCart = (item) => {
     useEffect(() => {
         const existingCartlist = JSON.parse(localStorage.getItem('cartlist')) || [];
         setIsInCart(existingCartlist.some(cartlistItem => cartlistItem.id === item.id));
-    }, [item.id]);
+    }, [item?.id]);
 
     const addItemToCart = (e) => {
         e.stopPropagation();

@@ -13,7 +13,7 @@ const useWishlist = (item) => {
     useEffect(() => {
         const existingWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         setIsInWishlist(existingWishlist.some(wishlistItem => wishlistItem.id === item.id));
-    }, [item.id]);
+    }, [item?.id]);
 
     const addItemToWishlist = (e,item) => {
         e.stopPropagation();
@@ -36,7 +36,7 @@ const useWishlist = (item) => {
         const existingWishlist = JSON.parse(existingWishlistJSON);
 
         if (isInWishlist) {
-            const updatedWishlist = existingWishlist.filter(wishlistItem => wishlistItem.id !== item.id);
+            const updatedWishlist = existingWishlist.filter(wishlistItem => wishlistItem.id !== item?.id);
             localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
             setIsInWishlist(false);
             handleAlertOpen('success', 'Product removed from favourites.', '#1fae15')

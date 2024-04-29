@@ -1,0 +1,68 @@
+.contact {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 47px;
+
+    section {
+        width: 50%;
+
+        .title {
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .sub-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            aside {
+                .form-group {
+                    label {
+                        font-size: 12px;
+                        font-size: 400;
+                        color: grey;
+                        text-transform: uppercase;
+                        margin-bottom: 8px;
+                    }
+
+                    input {
+                        height: 50px;
+                        box-shadow: none;
+                    }
+
+                    textarea {
+                        box-shadow: none;
+                        min-height: 100px;
+                        max-height: 300px;
+                    }
+                }
+
+                .btn {
+                    background-color: #000;
+                    color: #fff;
+                    height: 50px;
+                    font-size: 11px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+
+                    &:hover {
+                        background-color: #1a1919;
+                    }
+                }
+            }
+        }
+    }
+}

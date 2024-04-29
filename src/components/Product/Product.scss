@@ -13,7 +13,6 @@
             background-color: #fff;
             display: flex;
             align-items: center;
-            // gap: 12px;
 
             img {
                 object-fit: scale-down;
@@ -65,6 +64,11 @@
                 color: grey;
                 font-size: 12px;
                 font-weight: 400;
+
+                .route-pathname {
+                    font-size: 18px;
+                    text-transform: capitalize;
+                }
             }
 
             .product-category {
@@ -72,7 +76,6 @@
                 font-size: 12px;
                 color: grey;
                 font-weight: 400;
-                text-decoration: underline;
             }
 
             .product-title,
@@ -99,6 +102,19 @@
                 .btn {
                     font-size: 12px;
                     font-weight: 500;
+                    height: 50px;
+                    &:hover {
+                        .icon {
+                            color: white !important;
+                        }
+                    }
+                }
+
+                .no-login-msg {
+                    font-size: 14px;
+                    font-weight: 400;
+                    margin: 0;
+                    margin-bottom: 4px;
                 }
             }
 

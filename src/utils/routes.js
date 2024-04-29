@@ -7,6 +7,8 @@ const AllProducts = lazy(() => import("../components/AllProducts/AllProducts"));
 const Clothes = lazy(() => import("../components/Clothes/Clothes"));
 const Electronics = lazy(() => import("../components/Electronics/Electronics"));
 const Jewelery = lazy(() => import("../components/Jewelery/Jewelery"));
+const About = lazy(() => import("../components/About/About"));
+const Contact = lazy(() => import("../components/Contact/Contact"));
 const Cart = lazy(() => import("../components/Cart/Cart"));
 const Wishlist = lazy(() => import("../components/Favourites/Favourites"));
 const Product = lazy(() => import("../components/Product/Product"));
@@ -72,6 +74,22 @@ export const router = createBrowserRouter([
                 path: "/wishlist",
                 element: (<Suspense fallback={<BouncingDotsLoader />}>
                     <Wishlist />
+                    <Footer />
+                </Suspense>),
+
+            },
+            {
+                path: "/contact",
+                element: (<Suspense fallback={<BouncingDotsLoader />}>
+                    <Contact />
+                    <Footer />
+                </Suspense>),
+
+            },
+            {
+                path: "/about",
+                element: (<Suspense fallback={<BouncingDotsLoader />}>
+                    <About />
                     <Footer />
                 </Suspense>),
 
