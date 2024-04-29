@@ -5,7 +5,7 @@ const About = () => {
     return (
         <iframe
             title="My Portfolio"
-            src="https://portfolio-zaidakbar.netlify.app/"
+            src="https://portfolio-zaidakbar.vercel.app/"
             frameborder="0"
             className='frame-portfolio'
         />

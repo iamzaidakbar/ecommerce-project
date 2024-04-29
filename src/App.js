@@ -11,7 +11,7 @@ function App() {
     if (pathname === "/") {
       navigate("/store")
     }
-  }, [])
+  }, [pathname])
 
   return (
     <div className="App">

@@ -4,6 +4,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { SlUser } from "react-icons/sl";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { GrGoogleWallet } from "react-icons/gr";
+import { IoIosCube } from "react-icons/io";
 import "../Navbar/Navbar.scss";
 import { auth } from '../../Firebase/Firebase';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,7 +77,7 @@ const Navbar = () => {
                 }} className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav d-flex align-items-center gap-2">
                         <li style={styles} className="nav-item">
-                            <Link className='border-0' to={'/store'} ><GrGoogleWallet className='icon' size={'30px'} color={location.pathname === '/home' || location.pathname === '/' ? 'red' : 'white'} /></Link>
+                            <Link className='border-0' to={'/store'} ><IoIosCube className='icon' size={'30px'} color={location.pathname === '/store' || location.pathname === '/' ? 'red' : 'white'} /></Link>
                         </li>
                         <li style={styles} className="nav-item">
                             <Link to={'/store'} className={`nav-link text-uppercase text-white ${location.pathname === '/store' && 'active'}`} >All Products</Link>
