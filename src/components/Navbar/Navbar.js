@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { SlUser } from "react-icons/sl";
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
-import { GrGoogleWallet } from "react-icons/gr";
 import { IoIosCube } from "react-icons/io";
 import "../Navbar/Navbar.scss";
 import { auth } from '../../Firebase/Firebase';

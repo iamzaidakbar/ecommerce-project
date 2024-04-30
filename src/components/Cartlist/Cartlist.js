@@ -40,6 +40,7 @@ const Cartlist = ({ products, isLoading }) => {
             return total + (item.price * item.quantity);
         }, 0);
         setTotalPrice(totalPrice.toFixed(2));
+        localStorage.setItem('totalPrice', totalPrice)
     }
 
     useEffect(() => {
@@ -118,7 +119,7 @@ const Cartlist = ({ products, isLoading }) => {
                             </span>
                             <span className='delivery-charges border-0 pb-3 mb-2 d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Offer</p>
-                                <span className='m-0'>{discountApplied ? '- $'+ DISCOUNT_OFFER : '$0'}</span>
+                                <span className='m-0'>{discountApplied ? '- $' + DISCOUNT_OFFER : '$0'}</span>
                             </span>
                             <span className='delivery-charges pb-3 mb-2 d-flex align-items-center justify-content-between'>
                                 <p className='m-0'>Delivery</p>
@@ -129,8 +130,8 @@ const Cartlist = ({ products, isLoading }) => {
                                 <p className='m-0'>Total</p>
                                 <span className='m-0'>${totalPrice - (discountApplied ? DISCOUNT_OFFER : 0)}</span>
                             </span>
-                            <button onClick={()=>{navigate("/checkout/address")}} className='btn rounded-0 border-0 w-100 mt-5'>Continue to Checkout</button>
-                            <p className='pt-3 m-0 lead'>We accept</p>
+                            <button onClick={() => { navigate("/checkout/address") }} className='btn rounded-0 border-0 w-100 mt-5'>Continue to Checkout</button>
+                            <p className='pt-3 m-0 lead'>We do not accept</p>
                             <p className='pt-1 m-0 lead'>Cash on Delivery</p>
                             <img loading='lazy' src={paymentGateway} className='payment-gateway-img pt-2' />
                             <p className='mt-2 notice'>Prices and delivery costs are not confirmed until you've reached the checkout.</p>

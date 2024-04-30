@@ -47,6 +47,14 @@ export const router = createBrowserRouter([
 
             },
             {
+                path: "/checkout/payment",
+                element: (<Suspense fallback={<BouncingDotsLoader />}>
+                    <Checkout />
+                    <Footer />
+                </Suspense>),
+
+            },
+            {
                 path: "/clothes",
                 element: (<Suspense fallback={<BouncingDotsLoader />}>
                     <Clothes />

@@ -4,6 +4,7 @@ import React from 'react'
 import Cart from '../Cart/Cart';
 import { useLocation } from "react-router-dom";
 import Address from "../Address/Address";
+import Payment from "../Payment/Payment";
 
 const Checkout = () => {
     const location = useLocation()
@@ -24,6 +25,7 @@ const Checkout = () => {
             <section className="dynamic_outlet_section">
                 {pathname === "_checkout_cart" && <Cart />}
                 {pathname === "_checkout_address" && <Address />}
+                {pathname === "_checkout_payment" && <Payment />}
             </section>
         </div>
     )

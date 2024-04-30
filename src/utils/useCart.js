@@ -10,7 +10,7 @@ const useCart = (item) => {
 
     useEffect(() => {
         const existingCartlist = JSON.parse(localStorage.getItem('cartlist')) || [];
-        setIsInCart(existingCartlist.some(cartlistItem => cartlistItem.id === item.id));
+        setIsInCart(existingCartlist.some(cartlistItem => cartlistItem?.id === item?.id));
     }, [item?.id]);
 
     const addItemToCart = (e) => {
@@ -29,7 +29,7 @@ const useCart = (item) => {
         const existingCartlist = JSON.parse(existingCartlistJSON);
 
         if (isInCart) {
-            const updatedcartlist = existingCartlist.filter(cartlistItem => cartlistItem.id !== item?.id);
+            const updatedcartlist = existingCartlist.filter(cartlistItem => cartlistItem?.id !== item?.id);
             localStorage.setItem('cartlist', JSON.stringify(updatedcartlist));
             setIsInCart(false);
             handleAlertOpen('success', 'Product removed from cart.', '#1fae15')
@@ -47,11 +47,14 @@ const useCart = (item) => {
             }, 5000)
         }
 
-       
     }
+    const emptyCart = () => {
+        localStorage.removeItem('cartlist');
+        setIsInCart(false);
+    };
 
 
-    return { addItemToCart, isInCart };
+    return { addItemToCart, emptyCart, isInCart };
 };
 
 export default useCart;

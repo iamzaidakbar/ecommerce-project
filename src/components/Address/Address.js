@@ -1,9 +1,9 @@
 import AddressForm from "../AddresForm/AddressForm";
 import "./Address.scss";
-
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from "react-router-dom";
+import useAlert from "../../utils/useAlert";
 
 const Address = () => {
     const navigate = useNavigate()
@@ -11,6 +11,7 @@ const Address = () => {
     const [refresh, setRefresh] = useState(false);
     const [editingAddress, setEditingAddress] = useState(null);
     const [storedAddresses, setStoredAddresses] = useState(JSON.parse(localStorage.getItem('addresses')) || []);
+    const { handleAlertOpen, handleAlertClose } = useAlert();
 
     const closeModal = (e) => {
         e.stopPropagation();
@@ -28,6 +29,10 @@ const Address = () => {
         });
         setStoredAddresses(updatedAddresses);
         localStorage.setItem('addresses', JSON.stringify(updatedAddresses));
+        handleAlertOpen("success", "Default Address Changed.", '#1fae15');
+        setTimeout(() => {
+            handleAlertClose();
+        }, 5000);
     };
 
     const deleteAddress = (e, id) => {
@@ -57,7 +62,7 @@ const Address = () => {
 
                 {storedAddresses && storedAddresses.map(item => (
                     <section onClick={() => setDefaultAddress(item)} key={item.id} className="section_2">
-                        <input className="form-check-input" checked={item.isDefault} type="radio" />
+                        <input className="form-check-input" readOnly checked={item.isDefault} type="radio" />
 
                         <aside className="address_details">
                             <span className="name">{item.name} {item.addressType && <small>{item.addressType}</small>}</span>
@@ -72,7 +77,10 @@ const Address = () => {
                     </section>
                 ))}
 
-                <section onClick={() => setShow(true)} className="section_3">
+                <section onClick={() => {
+                    setEditingAddress(null)
+                    setShow(true)
+                }} className="section_3">
                     <button className="btn">Add New Address</button>
                 </section>
 

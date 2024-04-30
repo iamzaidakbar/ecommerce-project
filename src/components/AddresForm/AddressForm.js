@@ -7,7 +7,7 @@ const AddressForm = ({ setShow, setRefresh, refresh, editingAddress }) => {
     const [activeAddressType, setActiveAddressType] = useState('');
     const { handleAlertOpen, handleAlertClose } = useAlert();
     const [formData, setFormData] = useState({
-        id: editingAddress ? editingAddress.id : Date.now(), 
+        id: editingAddress ? editingAddress.id : Date.now(),
         name: editingAddress ? editingAddress.name : '',
         email: editingAddress ? editingAddress.email : '',
         mobile: editingAddress ? editingAddress.mobile : '',
@@ -39,18 +39,17 @@ const AddressForm = ({ setShow, setRefresh, refresh, editingAddress }) => {
             addressType: type
         }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const storedAddresses = JSON.parse(localStorage.getItem('addresses')) || [];
-    
+
+        // If the address is set to default, update all addresses to false except the current one
         if (formData.isDefault) {
-            // Reset isDefault for all addresses in storedAddresses
             storedAddresses.forEach(address => {
                 address.isDefault = false;
             });
         }
-    
+
         let updatedAddresses;
         if (storedAddresses.length === 0) {
             // If there are no stored addresses, simply add the new address
@@ -63,15 +62,20 @@ const AddressForm = ({ setShow, setRefresh, refresh, editingAddress }) => {
                 }
                 return address;
             });
+            // If the address is not found in the existing addresses, add it
+            if (!updatedAddresses.find(address => address.id === formData.id)) {
+                updatedAddresses.push(formData);
+            }
         }
-    
+
         localStorage.setItem('addresses', JSON.stringify(updatedAddresses));
-    
+
         handleAlertOpen("success", "Address saved successfully.", '#1fae15');
         setTimeout(() => {
             handleAlertClose();
         }, 5000);
-    
+
+        // Reset form data after submission
         setFormData({
             id: Date.now(),
             name: '',
@@ -87,7 +91,8 @@ const AddressForm = ({ setShow, setRefresh, refresh, editingAddress }) => {
         setRefresh(!refresh);
         setShow(false);
     };
-    
+
+
 
     return (
         <div onClick={(e) => { e.stopPropagation() }} className="modal_body">
